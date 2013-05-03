@@ -36,6 +36,28 @@ Features
 + Thread-safe
 + Supports pushing to a particular event in a user's channel
 
+Example
+-------
+
+```C++
+#include <pusherpp/CPusher.hpp>
+#include <string>
+
+int main(int argc, char** argv)
+{
+	// Parameters obtained from Pusher.com
+	std::string appId  = "YOUR APP ID HERE";
+	std::string key    = "YOUR KEY HERE";
+	std::string secret = "YOUR SECRET HERE";
+	
+	Pusherpp::CPusher pusher(appId, key, secret);
+	
+	pusher.sendMessage("test_channel", "my_event", "Stuff");
+	
+	return 0;
+}
+```
+
 TODO
 ----
 + Adding a threadpool
