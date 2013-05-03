@@ -10,8 +10,8 @@ libpusherpp_la_LDFLAGS = -version-info $(SOVERSION)
 libpusherpp_includedir = $(includedir)
 nobase_libpusherpp_include_HEADERS = pusherpp/CPusher.hpp pusherpp/include/CHTTPClient.hpp pusherpp/include/config.h
 
-libpusherpp_libincludedir = $(libdir)/pusherpp/include
-nodist_libpusherpp_libinclude_HEADERS = pusherpp/config.h
+#libpusherpp_libincludedir = $(libdir)/pusherpp/include
+#nodist_libpusherpp_libinclude_HEADERS = pusherpp/config.h
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = pusherpp.pc
