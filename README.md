@@ -1,12 +1,7 @@
-cpppusher
+pusherpp
 =========
 
 Pusher Server Library in C++
-
-Changelog
----------
-+ May 1, 2013
-	- Created
 
 About
 -----
@@ -14,10 +9,26 @@ A C++ server library to push message through Pusher.com service.
 
 Prerequisites
 -------------
-+ A compiler that supports C++11's std::thread
-+ You need to install the following Linux libraries:
-	- LibCURL
-	- libcrypto of OpenSSL
++ A compiler that supports std::thread and the compiler directive -std=c++0x
++ The following libraries must be installed in your system:
+	- libcurl
+	- libcrypto (from OpenSSL)
+
+Installing
+----------
++ The usual
+	- ./configure
+	- make
+	- [sudo] make install
+
+Linking
+-------
++ Make sure you either have /ust/local/lib in your LIBDIR, or include it in you linker lookup dir (e.g. -L/usr/local/lib)
++ To link to the library, use -lpusherpp
++ You also need to link to the following libraries:
+	- libcurl (-lcurl)
+	- libcrypto (-lcrypto)
+	- pthreads (-lpthread)
 
 Features
 --------
@@ -28,4 +39,15 @@ TODO
 ----
 + Adding a threadpool
 + Support for other Pusher features
+
+License
+-------
+MIT license
+
+Changelog
+---------
++ May 3, 2013
+	- Autoconf enabled, now you  can configure/make/make install
++ May 1, 2013
+	- Created
 
