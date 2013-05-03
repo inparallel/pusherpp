@@ -1,0 +1,13 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: Pusher++
+Description: C++ Pusher Library
+Requires: libcurl libcrypto
+Version: @PACKAGE_VERSION@
+Libs: -L${libdir} -lpusherpp
+Cflags: -I${includedir}/pusherpp
+
+
