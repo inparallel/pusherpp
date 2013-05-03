@@ -32,13 +32,16 @@ Linking
 
 Features
 --------
++ Blocking calls; adding parallelism is up to you (well, so far).
 + Thread-safe
 + Supports pushing to a particular event in a user's channel
 
 TODO
 ----
 + Adding a threadpool
-+ Support for other Pusher features
++ Support for other Pusher features:
+	- Publishing an event on multiple channels
+	- Querying application state 
 
 License
 -------
@@ -48,6 +51,7 @@ Changelog
 ---------
 + May 3, 2013
 	- Autoconf enabled, now you  can configure/make/make install
+	- Changed to blocking calls
 + May 1, 2013
 	- Created
 
