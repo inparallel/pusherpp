@@ -1,6 +1,6 @@
 /* 
  * File:   CPusher.h
- * Author: mazen
+ * Author: Mazen Abdulaziz <mazen.abdulaziz@gmail.com>
  *
  * Created on April 24, 2013, 1:56 PM
  */
@@ -75,7 +75,8 @@ namespace Pusherpp
 		~CPusher();
 	
 		/**
-		 * \brief Posts the provided message to the specified channel and event in Pusher.
+		 * \brief Posts the provided message to the specified channel and event in Pusher. BLOCKS until the response
+		 * is recieved from Pusher.
 		 * 
 		 * Note that the message is sent as-is, so make sure it's a valid JSON object.
 		 * 

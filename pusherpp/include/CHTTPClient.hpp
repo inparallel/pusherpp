@@ -12,20 +12,11 @@ namespace Pusherpp
 	 */
 	class CHTTPClient
 	{
-		struct curl_slist* m_Headers; //!< A shared HTTP header construct
-	
 		/**
 		 * \brief The callback function of curl_easy_perform(). In our case, we're ignoring anything coming from
 		 * the HTTP server (yes, bad design)
 		 */
 		static size_t curlWrite(void *ptr, size_t size, size_t nmemb, void *userdata);
-	
-		/**
-		 * \brief The actual work performed by each sending thread.
-		 * \param url The URL to which the message will be POSTed
-		 * \param message The message to be sent
-		 */
-		void threadWork(std::string url, std::string message) const;
 	
 	public:
 		CHTTPClient();
@@ -33,11 +24,14 @@ namespace Pusherpp
 		~CHTTPClient();
 	
 		/**
-		 * \brief Wraps the provided message in an HTTP POST request and ships it to the provided url. No guarantees.
+		 * \brief Wraps the provided message in an HTTP POST request and ships it to the provided url, and BLOCKS 
+		 * until the response is received.
 		 * \param url The URL to which the message will be POSTed
 		 * \param message The message to be sent
+		 * 
+		 * \return The message from server
 		 */
-		void sendRequest(const std::string& url, const std::string& message) const;
+		std::string sendRequest(const std::string& url, const std::string& message) const;
 	};
 }
 
