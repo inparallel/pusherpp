@@ -5,19 +5,21 @@
  * Created on April 27, 2013, 12:44 AM
  */
 
-#include <cstdlib>
+#include <iostream>
 #include <pusherpp/CPusher.hpp>
+#include <string>
 
-
-/*
- * 
- */
-int main(int argc, char** argv) 
+int main(int argc, char** argv)
 {
-	Pusherpp::CPusher pusher("YOUR APP ID", "YOUR KEY", "YOUR SECRET");
-	
-	pusher.sendMessage("test_channel", "my_event", "Yellow!");
-	
-	return 0;
-}
+    // Parameters obtained from Pusher.com
+    std::string appId  = "YOUR APP ID HERE";
+    std::string key    = "YOUR KEY HERE";
+    std::string secret = "YOUR SECRET HERE";
 
+    Pusherpp::CPusher pusher(appId, key, secret);
+
+    // This call will block until the reply is received from pusher
+    std::cout << "Server says: " << pusher.sendMessage("test_channel", "my_event", "Stuff") << std::endl;
+
+    return 0;
+}

@@ -57,7 +57,6 @@ namespace Pusherpp
 		body_md5 = Md5(postss.str());
 
 		// Create the text to be HMACed
-		
 		authss << "POST\n/apps/" << m_AppId << "/events\n" << "auth_key=" << m_Key << "&auth_timestamp=" << 
 				  auth_timestamp << "&auth_version=" << auth_version << "&body_md5=" << body_md5;
 

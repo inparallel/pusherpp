@@ -39,7 +39,8 @@ namespace Pusherpp
 		char*              buff;
 		CURL*              curl;
 		CURLcode           res;
-				  
+		long               httpCode = 0;
+		
 		// Mazen: for some unknown reason, sending message.c_str() in the post body to Pusher doesn't work..
 		// while sending a copied array does!
 		buff = (char*) malloc(message.length() + 1);
@@ -56,7 +57,16 @@ namespace Pusherpp
 		curl_easy_setopt(curl, CURLOPT_URL, url.c_str()); // keep AS-IS
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, buff);
 		res = curl_easy_perform(curl);
-
+		
+		if(res == CURLcode::CURLE_OK)
+		{
+			curl_easy_getinfo (curl, CURLINFO_RESPONSE_CODE, &httpCode);
+		}
+		else
+		{
+			// TODO: prepare proper error message/code6+
+		}
+		
 		free(buff);
 		curl_slist_free_all(headers);
 		curl_easy_cleanup(curl);
