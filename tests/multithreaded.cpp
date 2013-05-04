@@ -9,8 +9,6 @@
 #include <thread>
 #include <pusherpp/CPusher.hpp>
 
-using namespace std;
-
 void threadWork(const Pusherpp::CPusher& pusha, const std::string& msg, int tid)
 {
 	std::cout << "Thread #" << tid << " | Pushing..." << std::endl;

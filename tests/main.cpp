@@ -8,7 +8,6 @@
 #include <cstdlib>
 #include <pusherpp/CPusher.hpp>
 
-using namespace std;
 
 /*
  * 
