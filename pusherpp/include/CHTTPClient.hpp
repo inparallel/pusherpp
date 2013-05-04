@@ -12,11 +12,20 @@ namespace Pusherpp
 	 */
 	class CHTTPClient
 	{
+
+		
 		/**
 		 * \brief The callback function of curl_easy_perform(). In our case, we're ignoring anything coming from
 		 * the HTTP server (yes, bad design)
-		 */
-		static size_t curlWrite(void *ptr, size_t size, size_t nmemb, void *userdata);
+		 * 
+       * \param ptr pointer to actual data
+       * \param size size defined in memory blocks
+       * \param nmemb size of a memory block of data
+       * \param stream where data shall be stored in user land. In this implementation, stream should be of type
+		 * std::stringstream
+       * \return 
+       */
+		static size_t curlWrite(void *ptr, size_t size, size_t nmemb, void *stream);
 	
 	public:
 		CHTTPClient();
@@ -27,9 +36,9 @@ namespace Pusherpp
 		 * \brief Wraps the provided message in an HTTP POST request and ships it to the provided url, and BLOCKS 
 		 * until the response is received.
 		 * \param url The URL to which the message will be POSTed
-		 * \param message The message to be sent
+		 * \param message The message to be sent. JSON format is welcome.
 		 * 
-		 * \return The message from server
+		 * \return Reply from server
 		 */
 		std::string sendRequest(const std::string& url, const std::string& message) const;
 	};

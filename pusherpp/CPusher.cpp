@@ -29,7 +29,7 @@ namespace Pusherpp
 		return std::string(mdString);
 	}
 
-	CPusher::CPusher(std::string appId, std::string key, std::string secret) : 
+	CPusher::CPusher(const std::string& appId, const std::string& key, const std::string& secret) : 
 		m_AppId(appId), m_Key(key), m_Secret(secret)
 	{
 	
@@ -40,32 +40,36 @@ namespace Pusherpp
 	
 	}
 
-	void CPusher::sendMessage(const std::string& channel, const std::string& event, const std::string& jsonMsg) const
+	std::string CPusher::sendMessage(const std::string& channel, const std::string& event, const std::string& jsonMsg) const
 	{
-		static std::string auth_version   = "1.0";
+		static std::string auth_version = "1.0";
+		
 		long int           auth_timestamp = time(0);
-
-		std::stringstream postss;
+		std::stringstream  postss;
+		std::stringstream  authss;
+		std::stringstream  urlss;
+		std::string        body_md5;
+		std::string        auth_signature;
+		
 		postss << "{\"name\":\"" << event << "\",\"data\":\"" << jsonMsg << "\",\"channel\":\"" << channel << "\"}";
 
 		// Compute the message's MD5
-		std::string body_md5 = Md5(postss.str());
+		body_md5 = Md5(postss.str());
 
 		// Create the text to be HMACed
-		std::stringstream ss;
-		ss << "POST\n/apps/" << m_AppId << "/events\n" << "auth_key=" << m_Key << "&auth_timestamp=" << 
+		
+		authss << "POST\n/apps/" << m_AppId << "/events\n" << "auth_key=" << m_Key << "&auth_timestamp=" << 
 				  auth_timestamp << "&auth_version=" << auth_version << "&body_md5=" << body_md5;
 
-		std::string auth_signature = generateHmac(ss.str());
-
-		std::stringstream urlss;
+		auth_signature = generateHmac(authss.str());
+		
 		urlss << "http://api.pusherapp.com/apps/" << m_AppId        << "/events?" <<
-					"body_md5="                      << body_md5       << 
-					"&auth_version="                 << auth_version   <<
-					"&auth_key="                     << m_Key          <<
-					"&auth_timestamp="               << auth_timestamp << 
-					"&auth_signature="               << auth_signature;
+		         "body_md5="                      << body_md5       << 
+		         "&auth_version="                 << auth_version   <<
+		         "&auth_key="                     << m_Key          <<
+		         "&auth_timestamp="               << auth_timestamp << 
+		         "&auth_signature="               << auth_signature;
 
-		m_Http.sendRequest(urlss.str(), postss.str());
+		return m_Http.sendRequest(urlss.str(), postss.str());
 	}
 }

@@ -70,7 +70,7 @@ namespace Pusherpp
 		 * \param key Key obtained from Pusher.com
 		 * \param secret Secret obtained from Pusher.com
 		 */
-		CPusher(std::string appId, std::string key, std::string secret);
+		CPusher(const std::string& appId, const std::string& key, const std::string& secret);
 	
 		~CPusher();
 	
@@ -82,9 +82,11 @@ namespace Pusherpp
 		 * 
 		 * \param channel Channel name of the user
 		 * \param event The event in user's channel
-		 * \param jsonMsg The message to be sent (must be in a valid JSON format)
+		 * \param jsonMsg The message to be sent. JSON format is welcome.
+		 * 
+		 * \return Reply from server
 		 */
-		void sendMessage(const std::string& channel, const std::string& event, const std::string& jsonMsg) const;
+		std::string sendMessage(const std::string& channel, const std::string& event, const std::string& jsonMsg) const;
 	};
 }
 #endif	/* CPUSHER_H */

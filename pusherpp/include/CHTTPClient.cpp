@@ -5,13 +5,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h> 
+#include <assert.h>
+#include <sstream> 
 
 namespace Pusherpp
 {
-	size_t CHTTPClient::curlWrite(void *ptr, size_t size, size_t nmemb, void *userdata)
+	size_t CHTTPClient::curlWrite(void *ptr, size_t size, size_t nmemb, void *stream)
 	{
-		// Ignore server's reply...
-	
+		// Nothing special here...
+		
+		std::stringstream* sstream = (std::stringstream*)(stream);
+		std::string value((char*) ptr, size * nmemb);
+
+		*sstream << value;
+		
 		return nmemb * size;
 	}
 
@@ -27,31 +34,33 @@ namespace Pusherpp
 
 	std::string CHTTPClient::sendRequest(const std::string& url, const std::string& message) const
 	{
+		struct curl_slist* headers = NULL;
+		std::stringstream  replyss;
+		char*              buff;
+		CURL*              curl;
+		CURLcode           res;
+				  
 		// Mazen: for some unknown reason, sending message.c_str() in the post body to Pusher doesn't work..
 		// while sending a copied array does!
-		
-		struct curl_slist* headers = NULL;
-		
-		char* buff = (char*) malloc(message.length() + 1);
+		buff = (char*) malloc(message.length() + 1);
 		memcpy(buff, message.c_str(), message.length());
 		buff[message.length()] = '\0';
 	
-		CURL* curl = curl_easy_init();
+		curl = curl_easy_init();
 		
 		headers = curl_slist_append(headers, "Content-Type: application/json");
 		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 		curl_easy_setopt(curl, CURLOPT_POST, 1);
-		//curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &CHTTPClient::curlWrite);
-	
+		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &CHTTPClient::curlWrite);
+		curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&replyss);
 		curl_easy_setopt(curl, CURLOPT_URL, url.c_str()); // keep AS-IS
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, buff);
-		std::cout << url << "\n" << message << std::endl;
-		CURLcode res = curl_easy_perform(curl);
-	
+		res = curl_easy_perform(curl);
+
 		free(buff);
 		curl_slist_free_all(headers);
 		curl_easy_cleanup(curl);
 		
-		return "";
+		return replyss.str();
 	}
 }
