@@ -36,10 +36,11 @@ Features
 + Thread-safe
 + Supports pushing to a particular event in a user's channel
 
-Example
--------
+Examples
+--------
 ### Simple Example
 ```C++
+#include <iostream>
 #include <pusherpp/CPusher.hpp>
 #include <string>
 
@@ -52,7 +53,8 @@ int main(int argc, char** argv)
 	
 	Pusherpp::CPusher pusher(appId, key, secret);
 	
-	pusher.sendMessage("test_channel", "my_event", "Stuff");
+	// This call will block until the reply is received from pusher
+	std::cout << "Server says: " << pusher.sendMessage("test_channel", "my_event", "Stuff") << std::endl;
 	
 	return 0;
 }
@@ -60,6 +62,8 @@ int main(int argc, char** argv)
 
 ### Multithreaded Example
 ```C++
+#include <iostream>
+#include <string>
 #include <cstdlib>
 #include <thread>
 #include <pusherpp/CPusher.hpp>
@@ -83,7 +87,13 @@ int main(int argc, char** argv)
 		tlist.emplace_back(std::thread(threadWork, pusher, std::to_string(i), i));
 	}
 	
-	// Wait for all threads to complete...
+	// Do something here..
+	
+	// .. another thing here..
+	
+	// .. search for the Higgs Boson..
+	
+	// Wait for all threads to complete
 	for(int i = 0; i < 10; i++)
 	{
 		tlist[i].join();
