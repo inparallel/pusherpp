@@ -7,7 +7,7 @@
 
 #include <cstdlib>
 #include <thread>
-#include "../pusherpp/CPusher.hpp"
+#include <pusherpp/CPusher.hpp>
 
 using namespace std;
 
@@ -20,7 +20,7 @@ void threadWork(const Pusherpp::CPusher& pusha, const std::string& msg, int tid)
 
 int main(int argc, char** argv) 
 {
-	Pusherpp::CPusher pusher("42773", "6ad70f7e8fe55b3046b0", "3981719d6eec722aa91a"); 
+	Pusherpp::CPusher pusher("YOUR APP ID", "YOUR KEY", "YOUR SECRET");
 	
 	std::vector<std::thread> tlist;
 	
