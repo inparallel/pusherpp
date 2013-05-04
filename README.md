@@ -9,26 +9,26 @@ A C++ server library to push message through Pusher.com service.
 
 Prerequisites
 -------------
-+ A compiler that supports std::thread and the compiler directive -std=c++0x
-+ The following libraries must be installed in your system:
++ A compiler that supports `std::thread` and the compiler directive `-std=c++0x`
++ The following libraries are required:
 	- libcurl
 	- libcrypto (from OpenSSL)
 
 Installing
 ----------
 + The usual
-	- ./configure
-	- make
-	- [sudo] make install
+	- `./configure`
+	- `make`
+	- `[sudo] make install`
 
 Linking
 -------
-+ Make sure you either have /ust/local/lib in your LIBDIR, or include it in you linker lookup dir (e.g. -L/usr/local/lib)
-+ To link to the library, use -lpusherpp
++ Make sure you either have `/ust/local/lib` in your `LIBDIR`, or include it in you linker lookup dir (e.g. `-L/usr/local/lib`)
++ To link to the library, use `-lpusherpp`
 + You also need to link to the following libraries:
-	- libcurl (-lcurl)
-	- libcrypto (-lcrypto)
-	- pthreads (-lpthread)
+	- libcurl (`-lcurl`)
+	- libcrypto (`-lcrypto`)
+	- pthreads (`-lpthread`)
 
 Features
 --------
@@ -60,14 +60,10 @@ int main(int argc, char** argv)
 
 TODO
 ----
-+ Adding a threadpool
++ Supporting async calls
 + Support for other Pusher features:
 	- Publishing an event on multiple channels
 	- Querying application state 
-
-License
--------
-MIT license
 
 Changelog
 ---------
@@ -76,4 +72,27 @@ Changelog
 	- Changed to blocking calls
 + May 1, 2013
 	- Created
+	
+License
+-------
+The MIT License (MIT)
 
+Copyright (c) 2013 Futures Business Development
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
