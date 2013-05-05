@@ -34,7 +34,7 @@ Features
 --------
 + Blocking calls; adding parallelism is up to you (well, so far).
 + Thread-safe
-+ Supports pushing to a particular event in a user's channel
++ Supports pushing to a particular event in to one or multiple channels
 
 Examples
 --------
@@ -55,11 +55,12 @@ int main(int argc, char** argv)
 	Pusherpp::CPusher pusher(appId, key, secret);
 	
 	// This call will block until the reply is received from pusher
-	std::cout << "Server says: " << pusher.sendMessage("test_channel", "my_event", "Stuff") << std::endl;
+	std::cout << "Server says: " << pusher.sendMessage("test_channel", "my_event", "Stuff") << 
+		std::endl;
 	
 	// Publish to multiple channels
-	std::cout << "Server says: " << pusher.sendMessage(std::vector<std::string>({"test_channel", "test_channel2"}), 
-		"my_event", "Stuff") << std::endl;
+	std::cout << "Server says: " << pusher.sendMessage(std::vector<std::string>({"test_channel",
+		"test_channel2"}), "my_event", "Stuff") << std::endl;
 	
 	return 0;
 }
@@ -111,11 +112,12 @@ TODO
 ----
 + Supporting async calls
 + Support for other Pusher features:
-	- Publishing an event on multiple channels
 	- Querying application state 
 
 Changelog
 ---------
++ May 5, 2013
+	- Now supports pushing to multiple channels
 + May 3, 2013
 	- Autoconf enabled, now you  can configure/make/make install
 	- Changed to blocking calls
