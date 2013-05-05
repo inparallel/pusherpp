@@ -64,7 +64,7 @@ namespace Pusherpp
 		}
 		else
 		{
-			// TODO: prepare proper error message/code6+
+			// TODO: prepare proper error message/code
 		}
 		
 		free(buff);

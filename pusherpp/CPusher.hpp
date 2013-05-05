@@ -16,12 +16,8 @@
 #include <vector>
 #include <unistd.h>
 
-#include <openssl/x509.h>
-#include <openssl/hmac.h>
-#include <openssl/md5.h>
-#include <openssl/evp.h>
-
 #include "include/CHTTPClient.hpp"
+#include "include/CUtilities.hpp"
 #include "include/config.h"
 
 #ifndef __GXX_EXPERIMENTAL_CXX0X__
@@ -40,26 +36,6 @@ namespace Pusherpp
 		std::string m_Key;    //!< Key obtained from Pusher
 		std::string m_Secret; //!< Secret obtained from Pusher
 		CHTTPClient m_Http;   //!< The HTTP client that will post the actual requests to the server
-	
-		/**
-		 * \brief A utility function that will generate an HMAC-SHA256 of the provided message. 
-		 * 
-		 * Uses libopenssl implementation of HMAC-SHA256.
-		 * 
-		 * \param message The message to be HMACed
-		 * \return The HMAC-SHA256 of the provided message
-		 */
-		std::string generateHmac(const std::string& message) const;
-	
-		/**
-		 * \brief A utility function that will generate an MD5 of the provided message. 
-		 * 
-		 * Uses libopenssl implementation of MD5.
-		 * 
-		 * \param message The message to be MD5ed
-		 * \return The MD5 of the provided message
-		 */
-		std::string Md5(const std::string& input) const;
 	
 	public:
 	
@@ -82,11 +58,11 @@ namespace Pusherpp
 		 * 
 		 * \param channel Channel name of the user
 		 * \param event The event in user's channel
-		 * \param jsonMsg The message to be sent. JSON format is welcome.
+		 * \param msg The message to be sent. JSON format is welcome.
 		 * 
 		 * \return Reply from server
 		 */
-		std::string sendMessage(const std::string& channel, const std::string& event, const std::string& jsonMsg) const;
+		std::string sendMessage(const std::string& channel, const std::string& event, const std::string& msg) const;
 	};
 }
 #endif	/* CPUSHER_H */
