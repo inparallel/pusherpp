@@ -52,7 +52,7 @@ namespace Pusherpp
 	
 		/**
 		 * \brief Posts the provided message to the specified channel and event in Pusher. BLOCKS until the response
-		 * is recieved from Pusher.
+		 * is received from Pusher.
 		 * 
 		 * Note that the message is sent as-is, so make sure it's a valid JSON object.
 		 * 
@@ -63,6 +63,20 @@ namespace Pusherpp
 		 * \return Reply from server
 		 */
 		std::string sendMessage(const std::string& channel, const std::string& event, const std::string& msg) const;
+	
+		/**
+		 * \brief Posts the provided message to the specified set of channels and event in Pusher. BLOCKS until the response
+		 * is received from Pusher.
+		 * 
+		 * Note that the message is sent as-is, so make sure it's a valid JSON object.
+		 * 
+		 * \param channels Set of channels to which the message shall be posted
+		 * \param event The event in user's channel
+		 * \param msg The message to be sent. JSON format is welcome.
+		 * 
+		 * \return Reply from server
+		 */
+		std::string sendMessage(const std::vector<std::string>& channels, const std::string& event, const std::string& msg) const;
 	};
 }
 #endif	/* CPUSHER_H */

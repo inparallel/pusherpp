@@ -15,6 +15,14 @@ namespace Pusherpp
 
 	std::string CPusher::sendMessage(const std::string& channel, const std::string& event, const std::string& msg) const
 	{
+		std::vector<std::string> vecCh;
+		vecCh.push_back(channel);
+
+		return sendMessage(vecCh, event, msg);
+	}
+
+	std::string CPusher::sendMessage(const std::vector<std::string>& channels, const std::string& event, const std::string& msg) const
+	{
 		static std::string authVersion = "1.0";
 
 		long int authTimestamp = time(0);
@@ -27,7 +35,14 @@ namespace Pusherpp
 		
 		escMsg = CUtilities::escapeString(msg);
 		
-		postss << "{\"name\":\"" << event << "\",\"data\":\"" << escMsg << "\",\"channel\":\"" << channel << "\"}";
+		postss << "{\"name\":\"" << event << "\",\"data\":\"" << escMsg << "\",\"channels\":[";
+		for(int i = 0; i < channels.size(); i++)
+		{
+			postss << "\"" << channels[i] << "\"" << (i != channels.size() - 1 ? "," : "");
+		}
+		postss << "]}";
+		
+		std::cout << postss.str() << std::endl;
 
 		// Compute the message's MD5
 		bodyMd5 = CUtilities::Md5(postss.str());
