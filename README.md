@@ -43,6 +43,7 @@ Examples
 #include <iostream>
 #include <pusherpp/CPusher.hpp>
 #include <string>
+#include <vector>
 
 int main(int argc, char** argv)
 {
@@ -55,6 +56,10 @@ int main(int argc, char** argv)
 	
 	// This call will block until the reply is received from pusher
 	std::cout << "Server says: " << pusher.sendMessage("test_channel", "my_event", "Stuff") << std::endl;
+	
+	// Publish to multiple channels
+	std::cout << "Server says: " << pusher.sendMessage(std::vector<std::string>({"test_channel", "test_channel2"}), 
+		"my_event", "Stuff") << std::endl;
 	
 	return 0;
 }
@@ -88,9 +93,7 @@ int main(int argc, char** argv)
 	}
 	
 	// Do something here..
-	
 	// .. another thing here..
-	
 	// .. search for the Higgs Boson..
 	
 	// Wait for all threads to complete
