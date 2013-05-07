@@ -13,32 +13,32 @@
 
 void threadWork(const Pusherpp::CPusher& pusha, const std::string& msg, int tid)
 {
-    std::cout << "Thread #" << tid << " | Pushing..." << std::endl;
-    std::cout << "Thread #" << tid << " | " << "Message from server: " <<
-              pusha.sendMessage("test_channel", "my_event", msg) << std::endl;
+	std::cout << "Thread #" << tid << " | Pushing..." << std::endl;
+	std::cout << "Thread #" << tid << " | " << "Message from server: " <<
+			  pusha.sendMessage("test_channel", "my_event", msg) << std::endl;
 }
 
-int main(int argc, char** argv) 
+int main(int argc, char** argv)
 {
-    Pusherpp::CPusher pusher("YOUR APP ID", "YOUR KEY", "YOUR SECRET");
+	Pusherpp::CPusher pusher("YOUR APP ID", "YOUR KEY", "YOUR SECRET");
 
-    std::vector<std::thread> tlist;
+	std::vector<std::thread> tlist;
 
-    // Spawn some threads, each one will post a message to pusher
-    for(int i = 0; i < 10; i++)
-    {
-        tlist.emplace_back(std::thread(threadWork, pusher, std::to_string(i), i));
-    }
+	// Spawn some threads, each one will post a message to pusher
+	for (int i = 0; i < 10; i++)
+	{
+		tlist.emplace_back(std::thread(threadWork, pusher, std::to_string(i), i));
+	}
 
-    // Do something here..
-    // .. another thing here..
-    // .. search for the Higgs Boson..
+	// Do something here..
+	// .. another thing here..
+	// .. search for the Higgs Boson..
 
-    // Wait for all threads to complete
-    for(auto& t : tlist)
-    {
-        t.join();
-    }
+	// Wait for all threads to complete
+	for (auto& t : tlist)
+	{
+		t.join();
+	}
 
-    return 0;
+	return 0;
 }
