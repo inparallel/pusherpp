@@ -18,7 +18,7 @@ void threadWork(const Pusherpp::CPusher& pusha, const std::string& msg, int tid)
               pusha.sendMessage("test_channel", "my_event", msg) << std::endl;
 }
 
-int main2(int argc, char** argv) 
+int main(int argc, char** argv) 
 {
     Pusherpp::CPusher pusher("YOUR APP ID", "YOUR KEY", "YOUR SECRET");
 
