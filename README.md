@@ -124,6 +124,8 @@ TODO
 
 Changelog
 ---------
++ May 7, 2013
+	- Error messages reported from Pusher are stored
 + May 5, 2013
 	- Now supports pushing to multiple channels
 + May 3, 2013
