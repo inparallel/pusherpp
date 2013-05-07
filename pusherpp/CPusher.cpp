@@ -1,4 +1,5 @@
 #include "CPusher.hpp"
+#include "CPusherReply.hpp"
 
 namespace Pusherpp
 {
@@ -13,25 +14,27 @@ namespace Pusherpp
 
 	}
 
-	std::string CPusher::sendMessage(const std::string& channel, const std::string& event, const std::string& msg) const
+	const CPusherReply CPusher::sendMessage(const std::string& channel, const std::string& event, const std::string& msg) const
 	{
-		std::vector<std::string> vecCh;
-		vecCh.push_back(channel);
+		std::vector<std::string> lCh;
+		lCh.push_back(channel);
 
-		return sendMessage(vecCh, event, msg);
+		return sendMessage(lCh, event, msg);
 	}
 
-	std::string CPusher::sendMessage(const std::vector<std::string>& channels, const std::string& event, const std::string& msg) const
+	const CPusherReply CPusher::sendMessage(const std::vector<std::string>& channels, const std::string& event, const std::string& msg) const
 	{
 		static std::string authVersion = "1.0";
 
-		long int authTimestamp = time(0);
+		long int          authTimestamp = time(0);
 		std::stringstream postss;
 		std::stringstream authss;
 		std::stringstream urlss;
-		std::string bodyMd5;
-		std::string authSignature;
-		std::string escMsg;
+		std::string       bodyMd5;
+		std::string       authSignature;
+		std::string       escMsg;
+		long              httpCode;
+		CPusherReply      ret;
 		
 		escMsg = CUtilities::escapeString(msg);
 		
@@ -41,8 +44,6 @@ namespace Pusherpp
 			postss << "\"" << channels[i] << "\"" << (i != channels.size() - 1 ? "," : "");
 		}
 		postss << "]}";
-		
-		std::cout << postss.str() << std::endl;
 
 		// Compute the message's MD5
 		bodyMd5 = CUtilities::Md5(postss.str());
@@ -60,6 +61,36 @@ namespace Pusherpp
 				  "&auth_timestamp=" << authTimestamp <<
 				  "&auth_signature=" << authSignature;
 
-		return m_Http.sendRequest(urlss.str(), postss.str());
+		ret.message = m_Http.sendRequest(urlss.str(), postss.str(), httpCode);
+		
+		switch (httpCode)
+		{
+			case 200:
+				ret.error = CPusherReply::PSH_SUCCESS;
+				break;
+				
+			case 400:
+				ret.error = CPusherReply::PSH_GENERIC_ERROR;
+				break;
+				
+			case 401:
+				ret.error = CPusherReply::PSH_AUTH_ERROR;
+				break;
+				
+			case 403:
+				ret.error = CPusherReply::PSH_FORBIDDEN;
+				break;
+				
+			case 413:
+				ret.error = CPusherReply::PSH_OVERFLOW;
+				break;
+				
+			default:
+				ret.error = CPusherReply::PSH_UNKNOWN;
+				break;
+				
+		}
+		
+		return ret;
 	}
 }

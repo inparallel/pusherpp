@@ -19,6 +19,7 @@
 #include "include/CHTTPClient.hpp"
 #include "include/CUtilities.hpp"
 #include "include/config.h"
+#include "CPusherReply.hpp"
 
 #ifndef __GXX_EXPERIMENTAL_CXX0X__
 #define __GXX_EXPERIMENTAL_CXX0X__
@@ -62,7 +63,7 @@ namespace Pusherpp
 		 * 
 		 * \return Reply from server
 		 */
-		std::string sendMessage(const std::string& channel, const std::string& event, const std::string& msg) const;
+		const CPusherReply sendMessage(const std::string& channel, const std::string& event, const std::string& msg) const;
 	
 		/**
 		 * \brief Posts the provided message to the specified set of channels and event in Pusher. BLOCKS until the response
@@ -76,7 +77,7 @@ namespace Pusherpp
 		 * 
 		 * \return Reply from server
 		 */
-		std::string sendMessage(const std::vector<std::string>& channels, const std::string& event, const std::string& msg) const;
+		const CPusherReply sendMessage(const std::vector<std::string>& channels, const std::string& event, const std::string& msg) const;
 	};
 }
 #endif	/* CPUSHER_H */

@@ -18,7 +18,7 @@ void threadWork(const Pusherpp::CPusher& pusha, const std::string& msg, int tid)
               pusha.sendMessage("test_channel", "my_event", msg) << std::endl;
 }
 
-int main(int argc, char** argv) 
+int main2(int argc, char** argv) 
 {
     Pusherpp::CPusher pusher("YOUR APP ID", "YOUR KEY", "YOUR SECRET");
 
@@ -35,9 +35,9 @@ int main(int argc, char** argv)
     // .. search for the Higgs Boson..
 
     // Wait for all threads to complete
-    for(int i = 0; i < 10; i++)
+    for(auto& t : tlist)
     {
-        tlist[i].join();
+        t.join();
     }
 
     return 0;

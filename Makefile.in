@@ -82,7 +82,8 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 libpusherpp_la_LIBADD =
 am__dirstamp = $(am__leading_dot)dirstamp
 am_libpusherpp_la_OBJECTS = pusherpp/include/CHTTPClient.lo \
-	pusherpp/CPusher.lo pusherpp/include/CUtilities.lo
+	pusherpp/CPusher.lo pusherpp/CPusherReply.lo \
+	pusherpp/include/CUtilities.lo
 libpusherpp_la_OBJECTS = $(am_libpusherpp_la_OBJECTS)
 libpusherpp_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -247,10 +248,10 @@ AUTOMAKE_OPTIONS = subdir-objects
 ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 AM_LDFLAGS = -L/usr/local/lib -lcurl -lcrypto
 lib_LTLIBRARIES = libpusherpp.la
-libpusherpp_la_SOURCES = pusherpp/include/config.h pusherpp/include/CHTTPClient.hpp pusherpp/include/CHTTPClient.cpp pusherpp/CPusher.hpp pusherpp/CPusher.cpp pusherpp/include/CUtilities.hpp pusherpp/include/CUtilities.cpp
+libpusherpp_la_SOURCES = pusherpp/include/config.h pusherpp/include/CHTTPClient.hpp pusherpp/include/CHTTPClient.cpp pusherpp/CPusher.hpp pusherpp/CPusher.cpp pusherpp/CPusherReply.hpp pusherpp/CPusherReply.cpp pusherpp/include/CUtilities.hpp pusherpp/include/CUtilities.cpp
 libpusherpp_la_LDFLAGS = -version-info $(SOVERSION)
 libpusherpp_includedir = $(includedir)
-nobase_libpusherpp_include_HEADERS = pusherpp/CPusher.hpp pusherpp/include/CHTTPClient.hpp pusherpp/include/CUtilities.hpp pusherpp/include/config.h
+nobase_libpusherpp_include_HEADERS = pusherpp/CPusher.hpp pusherpp/CPusherReply.hpp pusherpp/include/CHTTPClient.hpp pusherpp/include/CUtilities.hpp pusherpp/include/config.h
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = pusherpp.pc
 all: all-am
@@ -357,6 +358,8 @@ pusherpp/$(DEPDIR)/$(am__dirstamp):
 	@: > pusherpp/$(DEPDIR)/$(am__dirstamp)
 pusherpp/CPusher.lo: pusherpp/$(am__dirstamp) \
 	pusherpp/$(DEPDIR)/$(am__dirstamp)
+pusherpp/CPusherReply.lo: pusherpp/$(am__dirstamp) \
+	pusherpp/$(DEPDIR)/$(am__dirstamp)
 pusherpp/include/CUtilities.lo: pusherpp/include/$(am__dirstamp) \
 	pusherpp/include/$(DEPDIR)/$(am__dirstamp)
 libpusherpp.la: $(libpusherpp_la_OBJECTS) $(libpusherpp_la_DEPENDENCIES) 
@@ -366,6 +369,8 @@ mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 	-rm -f pusherpp/CPusher.$(OBJEXT)
 	-rm -f pusherpp/CPusher.lo
+	-rm -f pusherpp/CPusherReply.$(OBJEXT)
+	-rm -f pusherpp/CPusherReply.lo
 	-rm -f pusherpp/include/CHTTPClient.$(OBJEXT)
 	-rm -f pusherpp/include/CHTTPClient.lo
 	-rm -f pusherpp/include/CUtilities.$(OBJEXT)
@@ -375,6 +380,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@pusherpp/$(DEPDIR)/CPusher.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@pusherpp/$(DEPDIR)/CPusherReply.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@pusherpp/include/$(DEPDIR)/CHTTPClient.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@pusherpp/include/$(DEPDIR)/CUtilities.Plo@am__quote@
 

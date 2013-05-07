@@ -1,3 +1,6 @@
+#ifndef CUTILITIES_H
+#define	CUTILITIES_H
+
 #include <iomanip>
 #include <string>
 #include <sstream>
@@ -47,3 +50,5 @@ namespace Pusherpp
 		static std::string escapeString(const std::string& str);
 	};
 }
+
+#endif /* CUTILITIES_H */

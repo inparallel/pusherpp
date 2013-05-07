@@ -1,6 +1,3 @@
-#ifndef CHTTPCLIENT_H
-#define	CHTTPCLIENT_H
-
 #include <curl/curl.h>
 #include <thread>
 #include <string>
@@ -40,12 +37,11 @@ namespace Pusherpp
 		 * until the response is received.
 		 * \param url The URL to which the message will be POSTed
 		 * \param message The message to be sent. JSON format is welcome.
-		 * \param httpCode A buffer to store the HTTP error code returned
 		 * 
 		 * \return Reply from server
 		 */
-		std::string sendRequest(const std::string& url, const std::string& message, long& httpCode) const;
+		std::string sendRequest(const std::string& url, const std::string& message) const;
 	};
 }
 
-#endif /* CHTTPCLIENT_H */
+
