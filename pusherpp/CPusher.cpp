@@ -19,10 +19,23 @@ namespace Pusherpp
 		std::vector<std::string> lCh;
 		lCh.push_back(channel);
 
-		return sendMessage(lCh, event, msg);
+		return trigger(lCh, event, msg);
 	}
 
 	const CPusherReply CPusher::sendMessage(const std::vector<std::string>& channels, const std::string& event, const std::string& msg) const
+	{
+		return trigger(channels, event, msg);
+	}
+	
+	const CPusherReply CPusher::trigger(const std::string& channel, const std::string& event, const std::string& msg) const
+	{
+		std::vector<std::string> lCh;
+		lCh.push_back(channel);
+
+		return sendMessage(lCh, event, msg);
+	}
+
+	const CPusherReply CPusher::trigger(const std::vector<std::string>& channels, const std::string& event, const std::string& msg) const
 	{
 		static std::string authVersion = "1.0";
 

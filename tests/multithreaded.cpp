@@ -15,7 +15,7 @@ void threadWork(const Pusherpp::CPusher& pusha, const std::string& msg, int tid)
 {
 	std::cout << "Thread #" << tid << " | Pushing..." << std::endl;
 	std::cout << "Thread #" << tid << " | " << "Message from server: " <<
-			  pusha.sendMessage("test_channel", "my_event", msg) << std::endl;
+			  pusha.trigger("test_channel", "my_event", msg) << std::endl;
 }
 
 int main(int argc, char** argv)
