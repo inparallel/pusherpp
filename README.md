@@ -119,13 +119,13 @@ int main(int argc, char** argv)
 
 TODO
 ----
-+ [ ] Support for other Pusher features:
-	- Querying application state 
-+ [ ] Enabling sending messages as unoredered_map's
-+ [ ] Enabling HTTPS connections to Pusher
-+ [ ] Avoiding duplicates while sending events
-+ [ ] Supporting async calls
-+ [ ] Supporting authentication
+- [ ] Support for other Pusher features:
+	+ Querying application state 
+- [ ] Enabling sending messages as unoredered_map's
+- [ ] Enabling HTTPS connections to Pusher
+- [ ] Avoiding duplicates while sending events
+- [ ] Supporting async calls
+- [ ] Supporting authentication
 
 Changelog
 ---------
