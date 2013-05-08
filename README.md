@@ -20,6 +20,7 @@ Installing
 	- `./configure`
 	- `make`
 	- `[sudo] make install`
++ In case you get an error similar to `mv: cannot stat 'pusherpp/include/.deps/SomeFile.Tpo': No such file or directory`, then run `libtoolize -f` before running `./configure`
 
 Linking
 -------
