@@ -44,7 +44,17 @@ namespace Pusherpp
 		 * 
 		 * \return Reply from server
 		 */
-		std::string sendRequest(const std::string& url, const std::string& message, long& httpCode) const;
+		std::string postRequest(const std::string& url, const std::string& message, long& httpCode) const;
+	
+		/**
+		 * \brief Wraps the provided message in an HTTP get request and ships it to the provided url, and BLOCKS 
+		 * until the response is received.
+		 * \param url The URL to which the message will be GETed
+		 * \param httpCode A buffer to store the HTTP error code returned
+		 * 
+		 * \return Reply from server
+		 */
+		std::string getRequest(const std::string& url, long& httpCode) const;
 	};
 }
 

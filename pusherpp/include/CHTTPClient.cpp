@@ -32,7 +32,7 @@ namespace Pusherpp
 		
 	}
 
-	std::string CHTTPClient::sendRequest(const std::string& url, const std::string& message, long& httpCode) const
+	std::string CHTTPClient::postRequest(const std::string& url, const std::string& message, long& httpCode) const
 	{
 		struct curl_slist* headers = NULL;
 		std::stringstream  replyss;
@@ -59,6 +59,29 @@ namespace Pusherpp
 		curl_easy_getinfo (curl, CURLINFO_RESPONSE_CODE, &httpCode);
 		
 		free(buff);
+		curl_slist_free_all(headers);
+		curl_easy_cleanup(curl);
+		
+		return replyss.str();
+	}
+
+	std::string CHTTPClient::getRequest(const std::string& url, long& httpCode) const
+	{
+		struct curl_slist* headers = NULL;
+		std::stringstream  replyss;
+		CURL*              curl;
+		CURLcode           res;
+	
+		curl = curl_easy_init();
+		
+		headers = curl_slist_append(headers, "Content-Type: application/json");
+		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &CHTTPClient::curlWrite);
+		curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&replyss);
+		curl_easy_setopt(curl, CURLOPT_URL, url.c_str()); // keep AS-IS
+		res = curl_easy_perform(curl);
+		curl_easy_getinfo (curl, CURLINFO_RESPONSE_CODE, &httpCode);
+		
 		curl_slist_free_all(headers);
 		curl_easy_cleanup(curl);
 		
