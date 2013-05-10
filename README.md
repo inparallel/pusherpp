@@ -1,11 +1,6 @@
-pusherpp
-=========
-
-Pusher Server Library in C++
-
-About
------
-A lightweight and thread-safe C++ server library to push message through Pusher.com service.
+Pusher++ (pusherpp)
+===================
+A lightweight and thread-safe C++ server library to push message through [Pusher.com] service.
 
 Prerequisites
 -------------
@@ -34,7 +29,9 @@ Features
 --------
 + Blocking calls; adding parallelism is up to you (well, so far)
 + Thread-safe
-+ Supports pushing to a particular event in to one or multiple channels
++ Supports pushing to a particular event on one or multiple channels
++ Duplicate messages can be avoided
++ Supports querying application state
 
 Examples
 --------
@@ -138,11 +135,9 @@ int main(int argc, char** argv)
 
 TODO
 ----
-- [x] Support for other Pusher features:
-	+ Querying application state 
 - [ ] Enabling sending messages as unoredered_map's
 - [ ] Enabling HTTPS connections to Pusher
-- [ ] Avoiding duplicates while sending events
+- [x] Avoiding duplicates while sending events
 - [ ] Supporting async calls
 - [ ] Supporting authentication
 
