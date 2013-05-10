@@ -29,7 +29,6 @@ Linking
 + You also need to link to the following libraries:
 	- libcurl (`-lcurl`)
 	- libcrypto (`-lcrypto`)
-	- pthreads (`-lpthread`)
 
 Features
 --------
