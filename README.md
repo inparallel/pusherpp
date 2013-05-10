@@ -1,6 +1,6 @@
 Pusher++ (pusherpp)
 ===================
-A lightweight and thread-safe C++ server library to push message through [Pusher.com] service.
+A lightweight and thread-safe C++ server library to push message through [Pusher.com](www.pusher.com) service.
 
 Prerequisites
 -------------
