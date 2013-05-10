@@ -135,7 +135,6 @@ int main(int argc, char** argv)
 
 TODO
 ----
-- [ ] Enabling sending messages as unoredered_map's
 - [ ] Enabling HTTPS connections to Pusher
 - [x] Avoiding duplicates while sending events
 - [ ] Supporting async calls
