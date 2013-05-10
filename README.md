@@ -32,7 +32,7 @@ Features
 + Supports triggering a particular event on one or multiple channels
 + Duplicate messages can be avoided
 + Supports querying application state
-+ Calls to Pusher can go through HTTP and HTTPS
++ Calls to Pusher can go through HTTP or HTTPS
 
 Examples
 --------
