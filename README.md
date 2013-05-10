@@ -93,6 +93,8 @@ void threadWork(const Pusherpp::CPusher& pusha, const std::string& msg, int tid)
 
 int main(int argc, char** argv)
 {
+	// NOTE: you need to link to pthread (-lpthread) before using this example
+
 	Pusherpp::CPusher pusher("YOUR APP ID", "YOUR KEY", "YOUR SECRET");
 
 	std::vector<std::thread> tlist;
