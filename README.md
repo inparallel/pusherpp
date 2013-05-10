@@ -51,6 +51,8 @@ int main(int argc, char** argv)
 	Pusherpp::CPusher pusher("YOUR APP ID", "YOUR KEY", "YOUR SECRET");
 	Pusherpp::CPusherReply response; // To store response received from Pusher
 	
+	// Note that all calls in this library are blocking
+	
 	// Get a list of channels
 	response = pusher.getChannels();
 	std::cout << response.message << std::endl;
@@ -63,7 +65,7 @@ int main(int argc, char** argv)
 	response = pusher.getChannels("presence-", Pusherpp::CPusher::CH_INFO_USERCOUNT);
 	std::cout << response.message << std::endl;
 	
-	// Trigger an event on a single channel (blocking call)
+	// Trigger an event on a single channel
 	response = pusher.trigger("test_channel", "my_event", "Stuff"); 
 	std::cout << response << std::endl; // You may also output a CPusherReply. Debug-friendly.
 	
