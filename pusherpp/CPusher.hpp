@@ -38,6 +38,7 @@ namespace Pusherpp
 		std::string m_AppId; //!< API ID Obtained from Pusher
 		std::string m_Key; //!< Key obtained from Pusher
 		std::string m_Secret; //!< Secret obtained from Pusher
+		bool m_UseSecure; //!< Whether to use HTTP or HTTPS to talk to Pusher
 		CHTTPClient m_Http; //!< The HTTP client that will post the actual requests to the server
 
 		/**
@@ -75,15 +76,6 @@ namespace Pusherpp
 		}
 
 		/**
-		 * \brief Enumerates possible HTTP methods to be passed to the \sa CPusher::generateUrl() method.
-		 */
-		enum EHttpMethod
-		{
-			HTTP_GET = 0,
-			HTTP_POST = 1
-		};
-
-		/**
 		 * \brief Generates a pusher URL for GET requests based on the parameters passed.
 		 * 
 		 * \param path Path in pusher servers (e.g. /channels)
@@ -94,6 +86,7 @@ namespace Pusherpp
 		{
 			static std::string authVersion = "1.0";
 			static std::string baseUrl = "http://api.pusherapp.com/apps/";
+			static std::string baseSUrl = "https://api.pusherapp.com/apps/";
 
 			std::stringstream queryss;
 			std::stringstream authss;
@@ -117,7 +110,7 @@ namespace Pusherpp
 
 			authSignature = CUtilities::generateHmac(authss.str(), m_Secret);
 
-			urlss << baseUrl << m_AppId << path << "?" <<
+			urlss << (m_UseSecure ? baseSUrl : baseUrl) << m_AppId << path << "?" <<
 					  queryss.str() <<
 					  "&auth_signature=" << authSignature;
 
@@ -135,6 +128,7 @@ namespace Pusherpp
 		{
 			static std::string authVersion = "1.0";
 			static std::string baseUrl = "http://api.pusherapp.com/apps/";
+			static std::string baseSUrl = "https://api.pusherapp.com/apps/";
 
 			long int authTimestamp = time(0);
 			std::stringstream queryss;
@@ -154,7 +148,7 @@ namespace Pusherpp
 
 			authSignature = CUtilities::generateHmac(authss.str(), m_Secret);
 
-			urlss << "http://api.pusherapp.com/apps/" << m_AppId << "/events?" <<
+			urlss << (m_UseSecure ? baseSUrl : baseUrl) << m_AppId << "/events?" <<
 					  queryss.str() << "&auth_signature=" << authSignature;
 
 			return urlss.str();
@@ -175,8 +169,9 @@ namespace Pusherpp
 		 * \param appId Application ID obtained from Pusher.com
 		 * \param key Key obtained from Pusher.com
 		 * \param secret Secret obtained from Pusher.com
+		 * \param useSecure Set to true to use HTTPS. false by default
 		 */
-		CPusher(const std::string& appId, const std::string& key, const std::string& secret);
+		CPusher(const std::string& appId, const std::string& key, const std::string& secret, bool useSecure = false);
 
 		~CPusher();
 

@@ -5,8 +5,8 @@
 namespace Pusherpp
 {
 
-	CPusher::CPusher(const std::string& appId, const std::string& key, const std::string& secret) :
-	m_AppId(appId), m_Key(key), m_Secret(secret)
+	CPusher::CPusher(const std::string& appId, const std::string& key, const std::string& secret, bool useSecure) :
+	m_AppId(appId), m_Key(key), m_Secret(secret), m_UseSecure(useSecure)
 	{
 
 	}

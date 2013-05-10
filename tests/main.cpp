@@ -13,8 +13,12 @@
 
 int main(int argc, char** argv)
 {
-	Pusherpp::CPusher pusher("YOUR APP ID", "YOUR KEY", "YOUR SECRET");
+	bool useSecureHttp = true; // You can specify whether to use HTTPS to communicate with pusher or not
+	
+	Pusherpp::CPusher pusher("YOUR_APP_ID", "YOUR_KEY", "YOUR_SECRET", useSecureHttp);
 	Pusherpp::CPusherReply response; // To store response received from Pusher
+	
+	// Note that all calls within the library are blocking
 
 	// Get info about a channel -- note that subscription_count is not enabled by default
 	response = pusher.getChannelInfo("test_channel", Pusherpp::CPusher::CH_INFO_SUBS_COUNT);
@@ -25,11 +29,11 @@ int main(int argc, char** argv)
 			  Pusherpp::CPusher::CH_INFO_SUBS_COUNT | Pusherpp::CPusher::CH_INFO_USERCOUNT);
 	std::cout << response.message << std::endl;
 
-	// Get a list of channels
+	// Get a list of occupied channels
 	response = pusher.getChannels();
 	std::cout << response.message << std::endl;
 
-	// Get a list of channels, filtered by prefix
+	// Get a list of occupied channels, filtered by prefix
 	response = pusher.getChannels("test");
 	std::cout << response.message << std::endl;
 
@@ -37,7 +41,7 @@ int main(int argc, char** argv)
 	response = pusher.getChannels("presence-", Pusherpp::CPusher::CH_INFO_USERCOUNT);
 	std::cout << response.message << std::endl;
 
-	// Trigger an event on a single channel (blocking call)
+	// Trigger an event on a single channel
 	response = pusher.trigger("test_channel", "my_event", "Stuff");
 	std::cout << response << std::endl; // You may also output a CPusherReply object. Debug-friendly.
 
