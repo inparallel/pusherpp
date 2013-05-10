@@ -101,7 +101,7 @@ namespace Pusherpp
 			std::string authSignature;
 
 			params["auth_key"] = m_Key;
-			params["auth_timestamp"] = std::to_string((long long)time(0));
+			params["auth_timestamp"] = std::to_string((long long) time(0));
 			params["auth_version"] = authVersion;
 
 			for (auto it = params.begin(); it != params.end(); ++it)
@@ -164,8 +164,9 @@ namespace Pusherpp
 
 		enum EChannelInfo
 		{
-			CH_INFO_OCCUPIED = 0, //!< Get a list of occupied channels. Can only be used for presence channels
-			CH_INFO_USERCOUNT, //!< Get a list of occupied channels, alongside user count for each channel
+			CH_INFO_NONE = 0,          //!< No additional info required
+			CH_INFO_USERCOUNT = 0x01,  //!< Get a list of occupied channels, alongside user count for each channel. Can only be used for presence channels.
+			CH_INFO_SUBS_COUNT = 0x02, //!< Get subscription count for one channel. Can only be used with getChannelInfo()
 		};
 
 		/**
@@ -222,10 +223,12 @@ namespace Pusherpp
 		 * \param channel Channel name of the user
 		 * \param event The event in user's channel
 		 * \param msg The message to be sent. JSON format is welcome.
+		 * \param socketId The socket-id to be excluded from receiving the message
 		 * 
 		 * \return Response from pusher
 		 */
-		const CPusherReply trigger(const std::string& channel, const std::string& event, const std::string& msg) const;
+		const CPusherReply trigger(const std::string& channel, const std::string& event, const std::string& msg, 
+			const std::string& socketId = "") const;
 
 		/**
 		 * \brief Posts the provided message to the specified set of channels and event in Pusher. BLOCKS until the response
@@ -236,27 +239,31 @@ namespace Pusherpp
 		 * \param channels Set of channels to which the message shall be posted
 		 * \param event The event in user's channel
 		 * \param msg The message to be sent. JSON format is welcome.
+		 * \param socketId The socket-id to be excluded from receiving the message
 		 * 
 		 * \return Response from pusher
 		 */
-		const CPusherReply trigger(const std::vector<std::string>& channels, const std::string& event, const std::string& msg) const;
+		const CPusherReply trigger(const std::vector<std::string>& channels, const std::string& event, const std::string& msg, 
+			const std::string& socketId = "") const;
 
 		/**
-		 * \brief Gets information about channel. Response is stored in the CPusherReply.message.
-		 * 
-		 * \param channel Channel name
+		 * \brief Returns info about one channel
+		 * \param channel The channel to be queried
+		 * \param addInfo A list of additional info required
 		 * \return Response from pusher
 		 */
-		const CPusherReply getChannelInfo(const std::string& channel);
+		const CPusherReply getChannelInfo(const std::string& channel, long addInfo = CPusher::EChannelInfo::CH_INFO_NONE);
 
 		/**
 		 * \brief Fetch info for multiple channels
 		 * 
-		 * \param filter_by_prefix
-		 * \param info
+		 * \param filterByPrefix Channels prefixes, default is none.
+		 * \param addInfo What info to be queried. Default is "occupied channels" (EChannelInfo::CH_INFO_OCCUPIED). You can
+		 * also query about "user count" ONLY if prefix = "presence-". Note that you cannot query about "subscription 
+		 * count" when getting info for multiple channels.
 		 * \return 
 		 */
-		const CPusherReply getChannels(const std::string& filterByPrefix = "", EChannelInfo info = EChannelInfo::CH_INFO_OCCUPIED);
+		const CPusherReply getChannels(const std::string& filterByPrefix = "", EChannelInfo addInfo = EChannelInfo::CH_INFO_NONE);
 	};
 }
 #endif	/* CPUSHER_H */
