@@ -5,7 +5,7 @@ Pusher Server Library in C++
 
 About
 -----
-A light-weight and thread-safe C++ server library to push message through Pusher.com service.
+A lightweight and thread-safe C++ server library to push message through Pusher.com service.
 
 Prerequisites
 -------------
