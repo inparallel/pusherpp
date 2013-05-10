@@ -29,9 +29,10 @@ Features
 --------
 + Blocking calls; adding parallelism is up to you (well, so far)
 + Thread-safe
-+ Supports pushing to a particular event on one or multiple channels
++ Supports triggering a particular event on one or multiple channels
 + Duplicate messages can be avoided
 + Supports querying application state
++ Calls to Pusher can go through HTTP and HTTPS
 
 Examples
 --------
