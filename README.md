@@ -45,10 +45,12 @@ Examples
 
 int main(int argc, char** argv)
 {
-	Pusherpp::CPusher pusher("YOUR APP ID", "YOUR KEY", "YOUR SECRET");
+	bool useSecureHttp = true; // You can specify whether to use HTTPS to communicate with pusher or not
+	
+	Pusherpp::CPusher pusher("YOUR_APP_ID", "YOUR_KEY", "YOUR_SECRET", useSecureHttp);
 	Pusherpp::CPusherReply response; // To store response received from Pusher
 	
-	// Note that all calls in this library are blocking
+	// Note that all calls within the library are blocking
 
 	// Get info about a channel -- note that subscription_count is not enabled by default
 	response = pusher.getChannelInfo("test_channel", Pusherpp::CPusher::CH_INFO_SUBS_COUNT);
@@ -59,11 +61,11 @@ int main(int argc, char** argv)
 			  Pusherpp::CPusher::CH_INFO_SUBS_COUNT | Pusherpp::CPusher::CH_INFO_USERCOUNT);
 	std::cout << response.message << std::endl;
 
-	// Get a list of channels
+	// Get a list of occupied channels
 	response = pusher.getChannels();
 	std::cout << response.message << std::endl;
 
-	// Get a list of channels, filtered by prefix
+	// Get a list of occupied channels, filtered by prefix
 	response = pusher.getChannels("test");
 	std::cout << response.message << std::endl;
 
@@ -135,10 +137,10 @@ int main(int argc, char** argv)
 
 TODO
 ----
-- [ ] Enabling HTTPS connections to Pusher
+- [x] Enabling HTTPS connections to Pusher
 - [x] Avoiding duplicates while sending events
-- [ ] Supporting async calls
 - [ ] Supporting authentication
+- [ ] Supporting async calls
 
 Changelog
 ---------
@@ -146,6 +148,7 @@ Changelog
 	- Added getChannels() method to query all channels state
 	- Added getChannelInfo() method to query status of a single channel
 	- Ability to exclude a particular `socket_id` when calling trigger
+	- HTTPS connection to pusher enabled
 + May 8, 2013
 	- sendMessage() is now deprecated, use trigger() instead
 + May 7, 2013
