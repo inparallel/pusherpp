@@ -12,8 +12,6 @@ namespace Pusherpp
 {
 	size_t CHTTPClient::curlWrite(void *ptr, size_t size, size_t nmemb, void *stream)
 	{
-		// Nothing special here...
-		
 		std::stringstream* sstream = (std::stringstream*)(stream);
 		std::string value((char*) ptr, size * nmemb);
 
@@ -40,8 +38,8 @@ namespace Pusherpp
 		CURL*              curl;
 		CURLcode           res;
 		
-		// Mazen: for some unknown reason, sending message.c_str() in the post body to Pusher doesn't work..
-		// while sending a copied array does!
+		// Mazen: for some reason, sending message.c_str() in the post body to Pusher doesn't work..
+		// while sending a copied array does :-/
 		buff = (char*) malloc(message.length() + 1);
 		memcpy(buff, message.c_str(), message.length());
 		buff[message.length()] = '\0';
@@ -53,7 +51,7 @@ namespace Pusherpp
 		curl_easy_setopt(curl, CURLOPT_POST, 1);
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &CHTTPClient::curlWrite);
 		curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&replyss);
-		curl_easy_setopt(curl, CURLOPT_URL, url.c_str()); // keep AS-IS
+		curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
 		curl_easy_setopt(curl, CURLOPT_POSTFIELDS, buff);
 		res = curl_easy_perform(curl);
 		curl_easy_getinfo (curl, CURLINFO_RESPONSE_CODE, &httpCode);
@@ -78,7 +76,7 @@ namespace Pusherpp
 		curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
 		curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &CHTTPClient::curlWrite);
 		curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&replyss);
-		curl_easy_setopt(curl, CURLOPT_URL, url.c_str()); // keep AS-IS
+		curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
 		res = curl_easy_perform(curl);
 		curl_easy_getinfo (curl, CURLINFO_RESPONSE_CODE, &httpCode);
 		

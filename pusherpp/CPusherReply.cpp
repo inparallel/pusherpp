@@ -39,7 +39,7 @@ namespace Pusherpp
 			break;
 
 			case Pusherpp::CPusherReply::PSH_OVERFLOW:
-			std::cout << "(Data size in > 10KB)" << std::endl;
+			std::cout << "(Data size is > 10KB)" << std::endl;
 			break;
 
 			case Pusherpp::CPusherReply::PSH_UNKNOWN:

@@ -22,10 +22,6 @@
 #include "include/config.h"
 #include "CPusherReply.hpp"
 
-#ifndef __GXX_EXPERIMENTAL_CXX0X__
-#define __GXX_EXPERIMENTAL_CXX0X__
-#endif
-
 namespace Pusherpp
 {
 
