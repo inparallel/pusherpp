@@ -140,8 +140,9 @@ TODO
 ----
 - [x] Enabling HTTPS connections to Pusher
 - [x] Avoiding duplicates while sending events
-- [ ] Supporting authentication
-- [ ] Supporting async calls
+- [ ] Support logging
+- [ ] Support authentication
+- [ ] Support async calls
 
 Changelog
 ---------
