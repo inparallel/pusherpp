@@ -1,4 +1,4 @@
-Pusher++ (pusherpp)
+Pusher++ (pusherpp) [![Build Status](https://travis-ci.org/ParallelMazen/pusherpp.png?branch=master)](https://travis-ci.org/ParallelMazen/pusherpp)
 ===================
 A lightweight and thread-safe C++ server library to push message through [Pusher.com](www.pusher.com) service.
 
