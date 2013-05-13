@@ -3,4 +3,4 @@ language: cpp
 compiler:
   - gcc
 
-script: ./configure && make
+script: libtoolize -f && ./configure && make
