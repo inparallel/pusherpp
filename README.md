@@ -146,6 +146,8 @@ TODO
 
 Changelog
 ---------
++ May 13, 2013
+	- Trivos CI
 + May 10, 2013
 	- Added `getChannels()` method to query all channels state
 	- Added `getChannelInfo()` method to query status of a single channel
