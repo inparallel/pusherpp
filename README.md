@@ -147,18 +147,18 @@ TODO
 Changelog
 ---------
 + May 10, 2013
-	- Added getChannels() method to query all channels state
-	- Added getChannelInfo() method to query status of a single channel
+	- Added `getChannels()` method to query all channels state
+	- Added `getChannelInfo()` method to query status of a single channel
 	- Ability to exclude a particular `socket_id` when calling trigger
 	- HTTPS connection to pusher enabled
 + May 8, 2013
-	- sendMessage() is now deprecated, use trigger() instead
+	- `sendMessage()` is now deprecated, use `trigger()` instead
 + May 7, 2013
 	- Error messages reported from Pusher are stored
 + May 5, 2013
 	- Now supports pushing to multiple channels
 + May 3, 2013
-	- Autoconf enabled, now you  can configure/make/make install
+	- Autoconf enabled, now you  can `configure`/`make`/`make install`
 	- Changed to blocking calls
 + May 1, 2013
 	- Created
