@@ -1,6 +1,8 @@
 #include "CPusher.hpp"
 #include "CPusherReply.hpp"
 #include <assert.h>
+#include <cstddef>
+#include <functional>
 
 namespace Pusherpp
 {
@@ -8,21 +10,41 @@ namespace Pusherpp
 	CPusher::CPusher(const std::string& appId, const std::string& key, const std::string& secret, bool useSecure) :
 	m_AppId(appId), m_Key(key), m_Secret(secret), m_UseSecure(useSecure)
 	{
-
+		// A note for future me:
+		// Typically, I'd call m_Log = nullptr, but since this might not be supported
+		// in GCC < 4.7.1; this is currently not an option.
 	}
 
 	CPusher::~CPusher()
 	{
-
+		
 	}
 
 	const CPusherReply CPusher::sendMessage(const std::string& channel, const std::string& event, const std::string& msg) const
 	{
+		if(m_Log != NULL) // C++11-ih: m_Log != nullptr
+		{
+			std::stringstream log;
+			log << "pusherpp: " << __func__ << ": " << "WARNING: YOU ARE CALLING A DEPRECATED FUNCTION"
+					  ", USE trigger() INSTEAD." << std::endl;
+			
+			m_Log(log.str());
+		}
+		
 		return trigger(channel, event, msg);
 	}
 
 	const CPusherReply CPusher::sendMessage(const std::vector<std::string>& channels, const std::string& event, const std::string& msg) const
 	{
+		if(m_Log != NULL) // C++11-ih: m_Log != nullptr
+		{
+			std::stringstream log;
+			log << "pusherpp: " << __func__ << ": " << "WARNING: YOU ARE CALLING A DEPRECATED FUNCTION"
+					  ", USE trigger() INSTEAD." << std::endl;
+			
+			m_Log(log.str());
+		}
+		
 		return trigger(channels, event, msg);
 	}
 
@@ -38,15 +60,32 @@ namespace Pusherpp
 	const CPusherReply CPusher::trigger(const std::vector<std::string>& channels, const std::string& event, const std::string& msg,
 			  const std::string& socketId) const
 	{
+		if(m_Log != NULL) // C++11-ih: m_Log != nullptr
+		{
+			std::stringstream log;
+			log << "pusherpp: " << __func__ << ": " << "triggering an event named \"" <<  event << "\" on channel(s) [";
+			
+			for(auto it = channels.begin(); it != channels.end(); it++) // dropped foreach in favor of GCC 4.4 support
+			{
+				log << *it << (std::distance(it, channels.end()) != 1 ? ", " : "");
+			}
+			log << "]. The payload is: \"" << msg << "\". ";
+			
+			if(socketId.size() != 0)
+				log << "Excluding socketId: " << socketId;
+			
+			m_Log(log.str());
+		}
+		
 		long httpCode;
 		CPusherReply ret;
 		std::stringstream postss;
 		std::string url;
 
 		postss << "{\"name\":\"" << event << "\",\"data\":\"" << CUtilities::escapeString(msg) << "\",\"channels\":[";
-		for (int i = 0; i < channels.size(); i++)
+		for (auto it = channels.begin(); it != channels.end(); it++)
 		{
-			postss << "\"" << channels[i] << "\"" << (i != channels.size() - 1 ? "," : "");
+			postss << "\"" << *it << "\"" << (std::distance(it, channels.end()) > 1 ? "," : "");
 		}
 		postss << "], \"socket_id\":\""<< socketId << "\"}";
 
@@ -60,6 +99,14 @@ namespace Pusherpp
 
 	const CPusherReply CPusher::getChannelInfo(const std::string& channel, long vAddInfo)
 	{
+		if(m_Log != NULL) // C++11-ih: m_Log != nullptr
+		{
+			std::stringstream log;
+			log << "pusherpp: " << __func__ << ": " << "getting channel [" << channel << "] info...";
+			
+			m_Log(log.str());
+		}
+		
 		long httpCode;
 		CPusherReply ret;
 
@@ -96,6 +143,18 @@ namespace Pusherpp
 
 	const CPusherReply CPusher::getChannels(const std::string& filterByPrefix, CPusher::EChannelInfo info)
 	{
+		if(m_Log != NULL) // C++11-ih: m_Log != nullptr
+		{
+			std::stringstream log;
+			log << "pusherpp: " << __func__ << ": " << "getting all channels info";
+			
+			if(filterByPrefix.size() != 0)
+				log << ", filtered by prefix: \"" << filterByPrefix << "\"";
+			log << "...";
+			
+			m_Log(log.str());
+		}
+		
 		long httpCode;
 		CPusherReply ret;
 		
@@ -109,5 +168,18 @@ namespace Pusherpp
 		ret.error = this->interpretCode(httpCode);
 
 		return ret;
+	}
+	
+	void CPusher::setLogFunction(const std::function<void(const std::string&)>& logFunc)
+	{
+		m_Log = logFunc;
+		
+		if(m_Log != NULL) // C++11-ih: m_Log != nullptr
+		{
+			std::stringstream log;
+			log << "pusherpp: " << __func__ << ": " << "logging is all set.";
+			
+			m_Log(log.str());
+		}
 	}
 }

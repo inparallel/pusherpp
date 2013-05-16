@@ -16,6 +16,7 @@
 #include <vector>
 #include <map>
 #include <unistd.h>
+#include <functional>
 
 #include "include/CHTTPClient.hpp"
 #include "include/CUtilities.hpp"
@@ -36,7 +37,8 @@ namespace Pusherpp
 		std::string m_Secret; //!< Secret obtained from Pusher
 		bool m_UseSecure; //!< Whether to use HTTP or HTTPS to talk to Pusher
 		CHTTPClient m_Http; //!< The HTTP client that will post the actual requests to the server
-
+		std::function<void(const std::string&)> m_Log; //!< A reference to the logging function 
+		
 		/**
 		 * \brief A helper function to convert the HTTP status code returned by Pusher to an internal representation
 		 * \param httpCode The HTTP status code returned from Pusher
@@ -255,6 +257,12 @@ namespace Pusherpp
 		 * \return 
 		 */
 		const CPusherReply getChannels(const std::string& filterByPrefix = "", EChannelInfo addInfo = EChannelInfo::CH_INFO_NONE);
+		
+		/**
+		 * \brief Sets the logging function to the passed one. Use std::bind for infinite flexibility.
+       * \param logFunc The function intended to log events. It should have the signature void(const std::string&)
+       */
+		void setLogFunction(const std::function<void(const std::string&)>& logFunc);
 	};
 }
 #endif	/* CPUSHER_H */

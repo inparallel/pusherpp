@@ -10,14 +10,38 @@
 #include <pusherpp/CPusherReply.hpp>
 #include <string>
 #include <vector>
+#include <functional>
+
+void logC_Style(const std::string& logMessage)
+{
+	std::cout << "C logger style: ";
+	std::cout << logMessage << std::endl;
+}
+
+class AcutelyVerboseLogger
+{
+public:
+
+	void printLog(const std::string& logMessage)
+	{
+		std::cout << "Custom Verbose Log: ";
+		std::cout << logMessage << std::endl;
+	}
+};
 
 int main(int argc, char** argv)
 {
 	bool useSecureHttp = true; // You can specify whether to use HTTPS to communicate with pusher or not
-	
+
 	Pusherpp::CPusher pusher("YOUR_APP_ID", "YOUR_KEY", "YOUR_SECRET", useSecureHttp);
 	Pusherpp::CPusherReply response; // To store response received from Pusher
+
+	AcutelyVerboseLogger logger;
+	pusher.setLogFunction(std::bind(&AcutelyVerboseLogger::printLog, logger, std::placeholders::_1));
 	
+	// Or you can do:
+	// pusher.setLogFunction(&logC_Style);
+
 	// Note that all calls within the library are blocking
 
 	// Get info about a channel -- note that subscription_count is not enabled by default
@@ -47,12 +71,12 @@ int main(int argc, char** argv)
 
 	// Trigger an event on a set of channels
 	response = pusher.trigger(std::vector<std::string>({"test_channel", "test_channel2"}),
-		"my_event", "Lots of Stuff");
+	"my_event", "Lots of Stuff");
 	std::cout << response << std::endl;
 
 	// Trigger an event on a set of channels, excluding a socket_id
 	response = pusher.trigger(std::vector<std::string>({"test_channel", "test_channel2"}),
-		"my_event", "Lots of Stuff", "28716.7338");
+	"my_event", "Lots of Stuff", "28716.7338");
 	std::cout << response << std::endl;
 
 	return 0;

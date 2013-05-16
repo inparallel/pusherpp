@@ -15,11 +15,8 @@ namespace Pusherpp
 	 */
 	class CHTTPClient
 	{
-
-		
 		/**
-		 * \brief The callback function of curl_easy_perform(). In our case, we're ignoring anything coming from
-		 * the HTTP server (yes, bad design)
+		 * \brief The callback function of curl_easy_perform(). It simply dumps server blabber into a stream.
 		 * 
        * \param ptr pointer to actual data
        * \param size size defined in memory blocks

@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h> 
+#include <cstring> 
 #include <assert.h>
 #include <sstream> 
 
@@ -40,9 +40,8 @@ namespace Pusherpp
 		
 		// Mazen: for some reason, sending message.c_str() in the post body to Pusher doesn't work..
 		// while sending a copied array does :-/
-		buff = (char*) malloc(message.length() + 1);
-		memcpy(buff, message.c_str(), message.length());
-		buff[message.length()] = '\0';
+		buff = new char[message.length() + 1];
+		std::memcpy(buff, message.c_str(), message.length() + 1);
 	
 		curl = curl_easy_init();
 		
@@ -56,7 +55,7 @@ namespace Pusherpp
 		res = curl_easy_perform(curl);
 		curl_easy_getinfo (curl, CURLINFO_RESPONSE_CODE, &httpCode);
 		
-		free(buff);
+		delete[] buff;
 		curl_slist_free_all(headers);
 		curl_easy_cleanup(curl);
 		

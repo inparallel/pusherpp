@@ -33,6 +33,7 @@ Features
 + Duplicate messages can be avoided
 + Supports querying application state
 + Calls to Pusher can go through HTTP or HTTPS
++ Seamlessly integrable with your current logging calls
 
 Examples
 --------
@@ -92,6 +93,60 @@ int main(int argc, char** argv)
 }
 ```
 
+Examples
+--------
+### Logging Example
+You may pass the address to your custom logging function as a parameter to `setLogFunction()` method. Note that the custom log function
+should have the signature void(const std::string&)
+```C++
+#include <iostream>
+#include <pusherpp/CPusher.hpp>
+#include <pusherpp/CPusherReply.hpp>
+#include <string>
+
+void logC_Style(const std::string& logMessage)
+{
+	std::cout << "C logger style: ";
+	std::cout << logMessage << std::endl;
+}
+
+int main(int argc, char** argv)
+{
+	Pusherpp::CPusher pusher("YOUR_APP_ID", "YOUR_KEY", "YOUR_SECRET");
+
+	pusher.setLogFunction(&logC_Style);
+
+	// ...
+}
+```
+
+Alternatively, you can use C++11's `std::bind` for loads of flexibility. Here's an example:
+```C++
+#include <iostream>
+#include <pusherpp/CPusher.hpp>
+#include <pusherpp/CPusherReply.hpp>
+#include <string>
+#include <functional>
+
+class AcutelyVerboseLogger
+{
+public:
+	void printLog(const std::string& logMessage)
+	{
+		std::cout << "Custom Verbose Log: ";
+		std::cout << logMessage << std::endl;
+	}
+};
+
+int main(int argc, char** argv)
+{
+	Pusherpp::CPusher pusher("YOUR_APP_ID", "YOUR_KEY", "YOUR_SECRET");
+
+	AcutelyVerboseLogger logger;
+	pusher.setLogFunction(std::bind(&AcutelyVerboseLogger::printLog, logger, std::placeholders::_1));
+}
+```
+
 ### Multithreaded Example
 ```C++
 #include <iostream>
@@ -140,12 +195,14 @@ TODO
 ----
 - [x] Enabling HTTPS connections to Pusher
 - [x] Avoiding duplicates while sending events
-- [ ] Support logging
+- [x] Support logging
 - [ ] Support authentication
 - [ ] Support async calls
 
 Changelog
 ---------
++ May 16, 2013
+	- Logging support added
 + May 13, 2013
 	- Testing with Travis CI
 + May 10, 2013
@@ -160,7 +217,7 @@ Changelog
 + May 5, 2013
 	- Now supports pushing to multiple channels
 + May 3, 2013
-	- Autoconf enabled, now you  can `configure`/`make`/`make install`
+	- Autoconf enabled, now you  can `./configure`/`make`/`make install`
 	- Changed to blocking calls
 + May 1, 2013
 	- Created
