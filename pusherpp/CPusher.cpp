@@ -207,4 +207,30 @@ namespace Pusherpp
 		
 		return json.str();
 	}
+	
+	std::string CPusher::authPresenceChannel(const std::string& channelName, const std::string& socketId, const std::string& unescUserData)
+	{
+		std::stringstream authss;
+		std::stringstream json;
+		std::string hmac;
+		
+		authss << socketId << ":" << channelName << ":" << unescUserData;
+		hmac = CUtilities::generateHmac(authss.str(), m_Secret);
+		
+		// Construct 'em JSON
+		json << "{\"auth\":\"" << m_Key << ":" << hmac << "\",\"channel_data\":\"" << CUtilities::escapeString(unescUserData) << "\"}";
+		
+		if(m_Log != NULL)
+		{
+			std::stringstream log;
+			log << "pusherpp: " << __func__ << ": " << "authenticating socket \"" << socketId <<
+					  "\" to use private channel \"" << channelName << "\"... The generated auth message is " <<
+					  json.str() << ". In Pusher renounced this generated message, then DOUBLE-CHECK that the provided"
+					  "unescUserData is, well, unescaped.";
+			
+			m_Log(log.str());
+		}
+		
+		return json.str();
+	}
 }

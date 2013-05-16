@@ -1,6 +1,6 @@
 Pusher++ (pusherpp) [![Build Status](https://travis-ci.org/ParallelMazen/pusherpp.png?branch=master)](https://travis-ci.org/ParallelMazen/pusherpp)
 ===================
-A lightweight and thread-safe C++ server library to push message through [Pusher.com](www.pusher.com) service.
+A fully-featured, lightweight and thread-safe C++ server library to push message through [Pusher.com](www.pusher.com) service.
 
 Prerequisites
 -------------
@@ -33,6 +33,7 @@ Features
 + Duplicate messages can be avoided
 + Supports querying application state
 + Calls to Pusher can go through HTTP or HTTPS
++ Authenticate user requests to subscribe to either private or presence channels
 + Seamlessly integrable with your current logging calls
 
 Examples
@@ -192,26 +193,30 @@ int main(int argc, char** argv)
 ```
 ### Authentication
 You can authenticate requests to subscribe to private channels using `authPrivateChannel()` method, which will return
-the authentication token wrapped within a JSON object (string). Note that transporting this message to client is up to
+the authentication token wrapped within a JSON object (string). Note that transporting this JSON object to client is up to
 your implementation. For more details, visit: http://pusher.com/docs/authenticating_users
 ```C++
 std::cout << pusher.authPrivateChannel("private-foobar", "1234.1234");
 // <i>Possible</i> output: {"auth":"a93231fc6386d59435cd9c5174882c71506d5cb7453385dfea07b3a742af28fe"} 
 ```
+You may also authenticate requests to subscribe to presence channels using `authPresenceChannel()` method, which will return
+the authentication token, alongside the user data properly escaped, wrapped within a JSON object (string). Again, 
+transporting this JSON object to client is up to your implementation.
+```C++
+std::cout << pusher.authPresenceChannel("presence-foobar", "1234.1234", "{\"user_id\":10,\"user_info\":{\"name\":\"Mr. Pusher\"}}");
+// Possible output: {"auth":"d4bf53edd563ad8b5bc6:a93231fc6386d59435cd9c5174882c71506d5cb7453385dfea07b3a742af28fe","channel_data":"{\"user_id\":10,\"user_info\":{\"name\":\"Mr. Pusher\"}}"}
+```
 
 TODO
 ----
-- [x] Enabling HTTPS connections to Pusher
-- [x] Avoiding duplicates while sending events
-- [x] Support logging
-- [½] Support authentication
 - [ ] Support async calls
 
 Changelog
 ---------
 + May 16, 2013
+	- The library is finally fully-featured
 	- Logging support added
-	- Ability to authenticate subscription requests to private channels
+	- Ability to authenticate subscription requests to private and presence channels
 + May 13, 2013
 	- Testing with Travis CI
 + May 10, 2013

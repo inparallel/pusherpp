@@ -35,13 +35,9 @@ namespace Pusherpp
 		for (int i = 0; i < str.length(); i++)
 		{
 			if (unsigned(str[i]) < '\x20' || str[i] == '\\' || str[i] == '"')
-			{
-				ss << "\\u" << std::setfill('0') << std::setw(4) << std::hex << (unsigned) str[i];
-			} 
+				ss << "\\\"";
 			else
-			{
 				ss << str[i];
-			}
 		}
 		
 		return ss.str();

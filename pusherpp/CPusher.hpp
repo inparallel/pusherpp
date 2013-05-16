@@ -268,11 +268,22 @@ namespace Pusherpp
 		 * \brief Authenticates a socketId to subscribe to channel. It will return the authentication code wrapped in
 		 * JSON object and ready to be shipped to client. Note that transporting this message to client is up to
 		 * your implementation. For more details, visit: http://pusher.com/docs/authenticating_users
-       * \param channelName the name of the private channel that the user is asking to subscribe to
-       * \param socketId the socket-id of the user asking for authentication
+       * \param channelName The name of the private channel that the user is asking to subscribe to
+       * \param socketId The socket-id of the user asking for authentication
        * \return 
        */
 		std::string authPrivateChannel(const std::string& channelName, const std::string& socketId);
+
+		/**
+		 * \brief Authenticates a socketId to subscribe to a presence channel, provided the user data. It will return the 
+		 * authentication code + user data wrapped in JSON object and ready to be shipped to client. Note that transporting this 
+		 * message to client is up to your implementation. For more details, visit: http://pusher.com/docs/authenticating_users
+       * \param channelName The name of the presence channel to which the user is asking to subscribe
+       * \param socketId The socket-id of the user asking for authentication
+       * \param unescapedUserData The user data in *unescaped* JSON format
+       * \return 
+       */
+		std::string authPresenceChannel(const std::string& channelName, const std::string& socketId, const std::string& unescapedUserData);
 	};
 }
 #endif	/* CPUSHER_H */
