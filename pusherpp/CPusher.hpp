@@ -263,6 +263,16 @@ namespace Pusherpp
        * \param logFunc The function intended to log events. It should have the signature void(const std::string&)
        */
 		void setLogFunction(const std::function<void(const std::string&)>& logFunc);
+		
+		/**
+		 * \brief Authenticates a socketId to subscribe to channel. It will return the authentication code wrapped in
+		 * JSON object and ready to be shipped to client. Note that transporting this message to client is up to
+		 * your implementation. For more details, visit: http://pusher.com/docs/authenticating_users
+       * \param channelName the name of the private channel that the user is asking to subscribe to
+       * \param socketId the socket-id of the user asking for authentication
+       * \return 
+       */
+		std::string authPrivateChannel(const std::string& channelName, const std::string& socketId);
 	};
 }
 #endif	/* CPUSHER_H */

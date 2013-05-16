@@ -22,11 +22,11 @@ namespace Pusherpp
 
 	const CPusherReply CPusher::sendMessage(const std::string& channel, const std::string& event, const std::string& msg) const
 	{
-		if(m_Log != NULL) // C++11-ih: m_Log != nullptr
+		if(m_Log != NULL) // C++11-ish: m_Log != nullptr
 		{
 			std::stringstream log;
 			log << "pusherpp: " << __func__ << ": " << "WARNING: YOU ARE CALLING A DEPRECATED FUNCTION"
-					  ", USE trigger() INSTEAD." << std::endl;
+					  ", USE trigger() INSTEAD.";
 			
 			m_Log(log.str());
 		}
@@ -36,11 +36,11 @@ namespace Pusherpp
 
 	const CPusherReply CPusher::sendMessage(const std::vector<std::string>& channels, const std::string& event, const std::string& msg) const
 	{
-		if(m_Log != NULL) // C++11-ih: m_Log != nullptr
+		if(m_Log != NULL)
 		{
 			std::stringstream log;
 			log << "pusherpp: " << __func__ << ": " << "WARNING: YOU ARE CALLING A DEPRECATED FUNCTION"
-					  ", USE trigger() INSTEAD." << std::endl;
+					  ", USE trigger() INSTEAD.";
 			
 			m_Log(log.str());
 		}
@@ -60,7 +60,7 @@ namespace Pusherpp
 	const CPusherReply CPusher::trigger(const std::vector<std::string>& channels, const std::string& event, const std::string& msg,
 			  const std::string& socketId) const
 	{
-		if(m_Log != NULL) // C++11-ih: m_Log != nullptr
+		if(m_Log != NULL)
 		{
 			std::stringstream log;
 			log << "pusherpp: " << __func__ << ": " << "triggering an event named \"" <<  event << "\" on channel(s) [";
@@ -99,7 +99,7 @@ namespace Pusherpp
 
 	const CPusherReply CPusher::getChannelInfo(const std::string& channel, long vAddInfo)
 	{
-		if(m_Log != NULL) // C++11-ih: m_Log != nullptr
+		if(m_Log != NULL)
 		{
 			std::stringstream log;
 			log << "pusherpp: " << __func__ << ": " << "getting channel [" << channel << "] info...";
@@ -143,7 +143,7 @@ namespace Pusherpp
 
 	const CPusherReply CPusher::getChannels(const std::string& filterByPrefix, CPusher::EChannelInfo info)
 	{
-		if(m_Log != NULL) // C++11-ih: m_Log != nullptr
+		if(m_Log != NULL)
 		{
 			std::stringstream log;
 			log << "pusherpp: " << __func__ << ": " << "getting all channels info";
@@ -174,12 +174,37 @@ namespace Pusherpp
 	{
 		m_Log = logFunc;
 		
-		if(m_Log != NULL) // C++11-ih: m_Log != nullptr
+		if(m_Log != NULL)
 		{
 			std::stringstream log;
 			log << "pusherpp: " << __func__ << ": " << "logging is all set.";
 			
 			m_Log(log.str());
 		}
+	}
+	
+	std::string CPusher::authPrivateChannel(const std::string& channelName, const std::string& socketId)
+	{
+		std::stringstream authss;
+		std::stringstream json;
+		std::string hmac;
+		
+		authss << socketId << ":" << channelName;
+		hmac = CUtilities::generateHmac(authss.str(), m_Secret);
+		
+		// Construct 'em JSON
+		json << "{\"auth\":\"" << hmac << "\"}";
+		
+		if(m_Log != NULL)
+		{
+			std::stringstream log;
+			log << "pusherpp: " << __func__ << ": " << "authenticating socket \"" << socketId <<
+					  "\" to use private channel \"" << channelName << "\"... The generated auth message is " <<
+					  json.str();
+			
+			m_Log(log.str());
+		}
+		
+		return json.str();
 	}
 }
