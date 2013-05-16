@@ -93,11 +93,9 @@ int main(int argc, char** argv)
 }
 ```
 
-Examples
---------
 ### Logging Example
 You may pass the address to your custom logging function as a parameter to `setLogFunction()` method. Note that the custom log function
-should have the signature void(const std::string&)
+should have the signature `void(const std::string&)`. Example:
 ```C++
 #include <iostream>
 #include <pusherpp/CPusher.hpp>
@@ -144,6 +142,8 @@ int main(int argc, char** argv)
 
 	AcutelyVerboseLogger logger;
 	pusher.setLogFunction(std::bind(&AcutelyVerboseLogger::printLog, logger, std::placeholders::_1));
+
+	// ...
 }
 ```
 
