@@ -190,6 +190,14 @@ int main(int argc, char** argv)
 }
 
 ```
+### Authentication
+You can authenticate requests to subscribe to private channels using `authPrivateChannel()` method, which will return
+the authentication token wrapped within a JSON object (string). Note that transporting this message to client is up to
+your implementation. For more details, visit: (http://pusher.com/docs/authenticating_users)
+```C++
+std::cout << pusher.authPrivateChannel("private-foobar", "1234.1234");
+// <i>Possible</i> output: {"auth":"a93231fc6386d59435cd9c5174882c71506d5cb7453385dfea07b3a742af28fe"} 
+```
 
 TODO
 ----
