@@ -19,7 +19,7 @@ Installing
 
 Linking
 -------
-+ Make sure you either have `/ust/local/lib` in your `LIBDIR`, or include it in you linker lookup dir (e.g. `-L/usr/local/lib`)
++ Make sure you either have `/ust/local/lib` in your `LD_LIBRARY_PATH`, or include it in your linker lookup dir (e.g. `-L/usr/local/lib`)
 + To link to the library, use `-lpusherpp`
 + You also need to link to the following libraries:
 	- libcurl (`-lcurl`)
