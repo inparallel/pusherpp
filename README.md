@@ -19,7 +19,7 @@ Installing
 
 Linking
 -------
-+ Make sure you either have `/ust/local/lib` in your `LD_LIBRARY_PATH`, or include it in your linker lookup dir (e.g. `-L/usr/local/lib`)
++ Make sure you either have `/usr/local/lib` in your `LD_LIBRARY_PATH`, or include it in your linker lookup dir (e.g. `-L/usr/local/lib`)
 + To link to the library, use `-lpusherpp`
 + You also need to link to the following libraries:
 	- libcurl (`-lcurl`)
@@ -27,7 +27,7 @@ Linking
 
 Features
 --------
-+ Blocking calls; adding parallelism is up to you (well, so far)
++ Blocking calls; adding parallelism is up to you (so far)
 + Thread-safe
 + Supports triggering a particular event on one or multiple channels
 + Duplicate messages can be avoided
