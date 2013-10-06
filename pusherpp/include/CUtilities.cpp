@@ -4,29 +4,34 @@ namespace Pusherpp
 {
 	std::string CUtilities::generateHmac(const std::string& message, const std::string& secret)
 	{
+		SNM_LOG_FUNC();
+		
 		const char* key = secret.c_str();
 		const char* data = message.c_str();
-		unsigned char* digest;
+		unsigned char digest [EVP_MAX_MD_SIZE];
+		unsigned int size = EVP_MAX_MD_SIZE;
 
-		digest = HMAC(EVP_sha256(), key, secret.length(), (unsigned char*) data, message.length(), NULL, NULL);
+		HMAC(EVP_sha256(), key, m_Secret.length(), (unsigned char*) data, message.length(), digest, &size);
 
-		char mdString[SHA256_DIGEST_LENGTH * 2];
+		std::stringstream ret;
 		for (int i = 0; i < SHA256_DIGEST_LENGTH; i++)
-			sprintf(&mdString[i * 2], "%02x", (unsigned int) digest[i]);
+			ret << std::hex << std::setw(2) << std::setfill('0') <<  (unsigned int) digest[i];
 
-		return std::string(mdString);
+		return ret.str();
 	}
 
 	std::string CUtilities::Md5(const std::string& input)
 	{
+		SNM_LOG_FUNC();
+		
 		unsigned char result[MD5_DIGEST_LENGTH];
 		MD5((const unsigned char*) (input.c_str()), input.length(), result);
 
-		char mdString[MD5_DIGEST_LENGTH * 2];
+		std::stringstream ret;
 		for (int i = 0; i < MD5_DIGEST_LENGTH; i++)
-			sprintf(&mdString[i * 2], "%02x", (unsigned int) result[i]);
+			ret << std::hex << std::setw(2) << std::setfill('0') <<  (unsigned int) result[i];
 
-		return std::string(mdString);
+		return ret.str();
 	}
 
 	std::string CUtilities::escapeString(const std::string& str)
