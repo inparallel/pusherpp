@@ -9,7 +9,7 @@ namespace Pusherpp
 		unsigned char digest [EVP_MAX_MD_SIZE];
 		unsigned int size = EVP_MAX_MD_SIZE;
 
-		HMAC(EVP_sha256(), key, m_Secret.length(), (unsigned char*) data, message.length(), digest, &size);
+		HMAC(EVP_sha256(), key, secret.length(), (unsigned char*) data, message.length(), digest, &size);
 
 		std::stringstream ret;
 		for (int i = 0; i < SHA256_DIGEST_LENGTH; i++)
