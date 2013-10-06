@@ -4,8 +4,6 @@ namespace Pusherpp
 {
 	std::string CUtilities::generateHmac(const std::string& message, const std::string& secret)
 	{
-		SNM_LOG_FUNC();
-		
 		const char* key = secret.c_str();
 		const char* data = message.c_str();
 		unsigned char digest [EVP_MAX_MD_SIZE];
@@ -22,8 +20,6 @@ namespace Pusherpp
 
 	std::string CUtilities::Md5(const std::string& input)
 	{
-		SNM_LOG_FUNC();
-		
 		unsigned char result[MD5_DIGEST_LENGTH];
 		MD5((const unsigned char*) (input.c_str()), input.length(), result);
 
