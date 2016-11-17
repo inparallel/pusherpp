@@ -7,8 +7,8 @@
 namespace Pusherpp
 {
 
-	CPusher::CPusher(const std::string& appId, const std::string& key, const std::string& secret, bool useSecure) :
-	m_AppId(appId), m_Key(key), m_Secret(secret), m_UseSecure(useSecure)
+	CPusher::CPusher(const std::string& appId, const std::string& key, const std::string& secret, bool useSecure, const std::string& cluster) :
+	m_AppId(appId), m_Key(key), m_Secret(secret), m_UseSecure(useSecure), m_Cluster(cluster)
 	{
 		// A note for future me:
 		// Typically, I'd call m_Log = nullptr, but since this might not be supported
