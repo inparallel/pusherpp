@@ -35,6 +35,7 @@ namespace Pusherpp
 		std::string m_AppId; //!< API ID Obtained from Pusher
 		std::string m_Key; //!< Key obtained from Pusher
 		std::string m_Secret; //!< Secret obtained from Pusher
+        std::string m_Cluster; //!< Cluster from Pusher
 		bool m_UseSecure; //!< Whether to use HTTP or HTTPS to talk to Pusher
 		CHTTPClient m_Http; //!< The HTTP client that will post the actual requests to the server
 		std::function<void(const std::string&)> m_Log; //!< A reference to the logging function 
@@ -86,6 +87,11 @@ namespace Pusherpp
 			static std::string baseUrl = "http://api.pusherapp.com/apps/";
 			static std::string baseSUrl = "https://api.pusherapp.com/apps/";
 
+            if (m_Cluster.length() > 0) {
+                baseUrl = "http://api-"+m_Cluster+".pusher.com/apps/";
+			    baseSUrl = "https://api-"+m_Cluster+".pusher.com/apps/";
+            }
+
 			std::stringstream queryss;
 			std::stringstream authss;
 			std::stringstream urlss;
@@ -127,6 +133,11 @@ namespace Pusherpp
 			static std::string authVersion = "1.0";
 			static std::string baseUrl = "http://api.pusherapp.com/apps/";
 			static std::string baseSUrl = "https://api.pusherapp.com/apps/";
+            
+            if (m_Cluster.length() > 0) {
+                baseUrl = "http://api-"+m_Cluster+".pusher.com/apps/";
+			    baseSUrl = "https://api-"+m_Cluster+".pusher.com/apps/";
+            }
 
 			long int authTimestamp = time(0);
 			std::stringstream queryss;
@@ -169,7 +180,7 @@ namespace Pusherpp
 		 * \param secret Secret obtained from Pusher.com
 		 * \param useSecure Set to true to use HTTPS. false by default
 		 */
-		CPusher(const std::string& appId, const std::string& key, const std::string& secret, bool useSecure = false);
+		CPusher(const std::string& appId, const std::string& key, const std::string& secret, bool useSecure = false, const std::string& cluster = "ap1");
 
 		~CPusher();
 
