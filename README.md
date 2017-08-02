@@ -50,8 +50,9 @@ int main(int argc, char** argv)
 {
 	bool useSecureHttp = true; // You can specify whether to use HTTPS to communicate with pusher or not
 	
-	Pusherpp::CPusher pusher("YOUR_APP_ID", "YOUR_KEY", "YOUR_SECRET", useSecureHttp);
-	Pusherpp::CPusherReply response; // To store response received from Pusher
+        // Note: useSecureHttp param defaults to false, and cluster param defaults to "ap1" if not specified here.
+	Pusherpp::CPusher pusher("YOUR_APP_ID", "YOUR_KEY", "YOUR_SECRET", useSecureHttp, "YOUR_CLUSTER");
+        Pusherpp::CPusherReply response; // To store response received from Pusher
 	
 	// Note that all calls within the library are blocking
 
