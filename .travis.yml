@@ -3,4 +3,4 @@ language: cpp
 compiler:
   - gcc
 
-script: libtoolize -f && ./configure && make
+script: autoreconf --force --install && ./configure && make
